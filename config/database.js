@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect("mongodb://localhost/movies", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
+
 const db = mongoose.connection;
 
-db.once("connected", () => {
-  console.log(`Connected to MongoDB ${db.name} at ${db.host}:${db.port}`);
+db.on("connected", function () {
+  console.log(`Connected to MongoDB at ${db.host}:${db.port}`);
 });
