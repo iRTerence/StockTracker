@@ -1,23 +1,13 @@
 import "./App.css";
 import { Route, Switch, Link } from "react-router-dom";
+import React, { useState } from "react";
 
 function App() {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  let [value, setValue] = useState(0);
+  let [watchList, setWatchList] = useState([]);
+  let [portList, setPortList] = useState([]);
+
+  return <div className='App'>Hello World</div>;
 }
 
 export default App;
