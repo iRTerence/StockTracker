@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Switch, Link } from "react-router-dom";
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
+import axios from "axios";
 require("dotenv").config();
 
 function App() {
@@ -9,18 +10,33 @@ function App() {
   let [watchList, setWatchList] = useState([]);
   let [portList, setPortList] = useState([]);
 
-  const handleLogin = async (googleData) => {
-    const res = await fetch("/api/users/login", {
+  // const handleLogin = async (googleData) => {
+  //   const res = await fetch("/api/users/login", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       token: googleData.tokenId,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await res.json();
+  //   // store returned user in a context?
+  // };
+
+  const responseSuccessGoogle = (response) => {
+    console.log(response);
+    axios({
       method: "POST",
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      url: "http://localhost:3001/api/users/googlelogin/",
+      data: { tokeId: response.tokenId },
+    }).then((response) => {
+      console.log(response);
     });
-    const data = await res.json();
-    // store returned user in a context?
+  };
+
+  const responseFailGoogle = (response) => {
+    console.log(response);
   };
 
   return (
@@ -28,8 +44,8 @@ function App() {
       <GoogleLogin
         clientId='509611698431-7bdm59euoq3bdbql5jcusf0tvqu6c718.apps.googleusercontent.com'
         buttonText='Log in with Google'
-        onSuccess={handleLogin}
-        onFailure={handleLogin}
+        onSuccess={responseSuccessGoogle}
+        onFailure={responseFailGoogle}
         cookiePolicy={"single_host_origin"}
       />
     </div>
