@@ -28,6 +28,7 @@ const userSchema = new Schema({
   portfolio: [portSchema],
   googleId: String,
   name: String,
+  email: String,
 });
 
-module.exports = mongoose.model("Stocks", userSchema);
+module.exports = mongoose.model("user", userSchema);
