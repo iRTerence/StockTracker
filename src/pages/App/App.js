@@ -25,7 +25,6 @@ function App() {
   // };
 
   const responseSuccessGoogle = (response) => {
-    console.log(response);
     axios({
       method: "POST",
       url: "http://localhost:3001/api/users/googlelogin/",
