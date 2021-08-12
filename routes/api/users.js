@@ -2,22 +2,23 @@ var express = require("express");
 var router = express.Router();
 const User = require("../../model/user");
 var stocksCtrl = require("../../controllers/users");
+const passport = require("passport");
 
 /* GET users listing. */
-router.post("/googlelogin", stocksCtrl.googleLogin);
+// router.post("/googlelogin", stocksCtrl.googleLogin);
 
-router.use(async (req, res, next) => {
-  const loggedInUser = await User.find({ id: req.session.userId });
-  req.user = loggedInUser;
-  next();
-});
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
 
-router.delete("/googlelogout", async (req, res) => {
-  await req.session.destroy();
-  res.status(200);
-  res.json({
-    message: "Logged out successfully",
-  });
-});
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
+);
 
 module.exports = router;

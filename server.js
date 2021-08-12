@@ -3,7 +3,10 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const logger = require("morgan");
 const cors = require("cors");
+var cookieParser = require("cookie-parser");
 var session = require("express-session");
+var passport = require("passport");
+require("./config/passport");
 
 const app = express();
 
@@ -15,11 +18,27 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 app.use(express.static(path.join(__dirname, "build")));
+app.use(cookieParser());
 app.use(
   session({
-    secret: "SEIRocksbutisgettingverydifficult!",
+    secret: "SEIRocks!",
     resave: false,
     saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/",
   })
 );
 
