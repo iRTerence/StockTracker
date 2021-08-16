@@ -19,6 +19,8 @@ app.use(
 require("./config/database");
 require("dotenv").config();
 
+const userRouter = require("./routes/api/users");
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
@@ -52,7 +54,7 @@ app.get("/getuser", (req, res) => {
   res.send(req.user);
 });
 
-app.use("/api/users", require("./routes/api/users"));
+app.use("/api/users", userRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));

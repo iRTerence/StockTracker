@@ -1,7 +1,6 @@
 import "./App.css";
 import { Route, Switch, Link } from "react-router-dom";
 import React, { useState, useContext } from "react";
-import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import HomePage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";

@@ -1,16 +1,14 @@
+require("dotenv").config();
 const User = require("../model/user");
 const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(
-  "509611698431-7bdm59euoq3bdbql5jcusf0tvqu6c718.apps.googleusercontent.com"
-);
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 async function googleLogin(req, res) {
   const { tokenId } = req.body;
   client
     .verifyIdToken({
       idToken: req.body.tokeId,
-      audience:
-        "509611698431-7bdm59euoq3bdbql5jcusf0tvqu6c718.apps.googleusercontent.com",
+      audience: process.env.GOOGLE_CLIENT_ID,
     })
     .then((response) => {
       let { name, email, email_verified } = response.payload;
