@@ -23,11 +23,13 @@ function App() {
           exact
           render={({ history }) => <HomePage history={history} />}
         />
-        <Route
-          path='/login'
-          exact
-          render={({ history }) => <LoginPage history={history} />}
-        />
+        {userObject ? null : (
+          <Route
+            path='/login'
+            exact
+            render={({ history }) => <LoginPage history={history} />}
+          />
+        )}
       </Switch>
     </div>
   );
