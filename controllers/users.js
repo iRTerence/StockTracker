@@ -24,4 +24,9 @@ async function googleLogin(req, res) {
     });
 }
 
-module.exports = { googleLogin };
+function getUser(res, req) {
+  console.log(req);
+  res.send(req.user);
+}
+
+module.exports = { googleLogin, getUser };

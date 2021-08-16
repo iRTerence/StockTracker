@@ -21,4 +21,6 @@ router.get(
   }
 );
 
+router.get("/getuser", stocksCtrl.getUser);
+
 module.exports = router;
