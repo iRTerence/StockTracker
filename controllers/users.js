@@ -27,4 +27,11 @@ function getUser(req, res) {
   res.send(req.user);
 }
 
-module.exports = { googleLogin, getUser };
+function logOut(req, res) {
+  if (req.user) {
+    req.logout();
+    res.send("done");
+  }
+}
+
+module.exports = { googleLogin, getUser, logOut };

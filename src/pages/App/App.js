@@ -1,7 +1,6 @@
 import "./App.css";
 import { Route, Switch, Link } from "react-router-dom";
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import HomePage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";
 import NavBar from "../../components/NavBar/NavBar";
@@ -9,7 +8,7 @@ import { myContext } from "../../contexts/UserContext";
 
 function App() {
   const userObject = useContext(myContext);
-  console.log(userObject);
+  // console.log(userObject);
   let [value, setValue] = useState(0);
   let [watchList, setWatchList] = useState([]);
   let [portList, setPortList] = useState([]);
