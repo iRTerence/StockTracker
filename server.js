@@ -2,17 +2,22 @@ const express = require("express");
 const path = require("path");
 const favicon = require("serve-favicon");
 const logger = require("morgan");
-const cors = require("cors");
+
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var passport = require("passport");
 require("./config/passport");
 
 const app = express();
-
+const cors = require("cors");
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 require("./config/database");
 require("dotenv").config();
-app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -37,10 +42,15 @@ app.get(
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/",
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "http://localhost:3000/login",
   })
 );
+
+app.get("/getuser", (req, res) => {
+  console.log(req.user);
+  res.send(req.user);
+});
 
 app.use("/api/users", require("./routes/api/users"));
 

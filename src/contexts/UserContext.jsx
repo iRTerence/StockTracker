@@ -7,9 +7,7 @@ export default function Context(props) {
 
   useEffect(() => {
     axios
-      .get("https://localhost:3001/getuser", {
-        withCredentials: true,
-      })
+      .get("http://localhost:3001/getuser", { withCredentials: true })
       .then((res) => {
         console.log(res);
         if (res.data) {
