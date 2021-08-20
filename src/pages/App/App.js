@@ -7,11 +7,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import { myContext } from "../../contexts/UserContext";
 
 function App() {
+  //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
-  // console.log(userObject);
-  let [value, setValue] = useState(0);
-  let [watchList, setWatchList] = useState([]);
-  let [portList, setPortList] = useState([]);
 
   return (
     <div className='App'>
