@@ -13,9 +13,7 @@ async function googleLogin(req, res) {
     .then((response) => {
       let { name, email, email_verified } = response.payload;
       let newUser = new User({ name, email });
-      newUser.save((err, data) => {
-        // console.log(err);
-      });
+      newUser.save((err, data) => {});
       req.session.userId = newUser.id;
       res.status(201);
       res.json(newUser);
