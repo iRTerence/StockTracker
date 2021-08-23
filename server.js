@@ -20,9 +20,11 @@ require("./config/database");
 require("dotenv").config();
 
 const userRouter = require("./routes/api/users");
+const stockRouter = require("./routes/api/stocks");
 
 app.use(logger("dev"));
 app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 app.use(express.static(path.join(__dirname, "build")));
 app.use(cookieParser());
@@ -55,6 +57,10 @@ app.get("/getuser", (req, res) => {
 });
 
 app.use("/api/users", userRouter);
+app.use("/stocks", stockRouter);
+app.post("/stocks", (req, res) => {
+  console.log(req.body);
+});
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));

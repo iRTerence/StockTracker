@@ -4,6 +4,7 @@ import React, { useState, useContext } from "react";
 import HomePage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";
 import NavBar from "../../components/NavBar/NavBar";
+import SearchPage from "../SearchPage/SearchPage";
 import { myContext } from "../../contexts/UserContext";
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
             render={({ history }) => <LoginPage history={history} />}
           />
         )}
+        <Route
+          path='/search'
+          exact
+          render={({ history }) => <SearchPage history={history} />}
+        />
       </Switch>
     </div>
   );

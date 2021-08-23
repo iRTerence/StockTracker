@@ -6,14 +6,16 @@ export default function StockForm() {
   return (
     <div>
       {ticker}
-      <form>
+      <form action='/stocks' method='POST'>
         <input
           type='text'
           placeholder='Ticker'
           value={ticker}
           onChange={updateTicker}
+          id='ticker'
+          name='ticker'
         />
-        <button onClick={resetTicker}>Submit</button>
+        {/* <button onClick={resetTicker}>Submit</button> */}
       </form>
     </div>
   );

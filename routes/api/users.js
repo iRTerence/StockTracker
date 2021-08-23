@@ -1,8 +1,12 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../../model/user");
-var stocksCtrl = require("../../controllers/users");
+var userCtrl = require("../../controllers/users");
 const passport = require("passport");
+
+router.post("/add", function (req, res) {
+  console.log(req.body);
+});
 
 router.get(
   "/auth/google",
@@ -17,8 +21,8 @@ router.get(
   }
 );
 
-router.get("/getuser", stocksCtrl.getUser);
+router.get("/getuser", userCtrl.getUser);
 
-router.get("/logout", stocksCtrl.logOut);
+router.get("/logout", userCtrl.logOut);
 
 module.exports = router;
