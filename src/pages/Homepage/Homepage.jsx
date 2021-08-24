@@ -4,11 +4,8 @@ import WatchList from "../../components/WatchList/WatchList";
 import PortList from "../../components/PortList/PortList";
 import StockForm from "../../components/StockForm/StockForm";
 
-export default function Homepage() {
+export default function Homepage(props) {
   const context = useContext(myContext);
-  let [value, setValue] = useState(0);
-  let [portList, setPortList] = useState([]);
-  let [watchList, setWatchList] = useState(["fight dog", "fight cat"]);
 
   let loginOrLogout = (
     <div>
@@ -17,7 +14,7 @@ export default function Homepage() {
       ) : (
         <h1>Welcome to Stocktracker</h1>
       )}
-      <WatchList list={watchList} />
+      <WatchList list={props.list} />
       <PortList />
       <StockForm />
     </div>

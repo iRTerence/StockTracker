@@ -3,8 +3,6 @@ var router = express.Router();
 var stockCtrl = require("../../controllers/stocks");
 
 /* GET users listing. */
-router.post("/add", function (req, res) {
-  console.log(req.body);
-});
+router.post("/add", stockCtrl.addStock);
 
 module.exports = router;

@@ -6,7 +6,6 @@ export default (initialVal) => {
     setValue(e.target.value);
   };
   const reset = (e) => {
-    e.preventDefault();
     setValue("");
   };
   return [value, handleChange, reset];

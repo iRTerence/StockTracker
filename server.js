@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const favicon = require("serve-favicon");
 const logger = require("morgan");
-
+let bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var passport = require("passport");
@@ -24,7 +24,7 @@ const stockRouter = require("./routes/api/stocks");
 
 app.use(logger("dev"));
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded());
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 app.use(express.static(path.join(__dirname, "build")));
 app.use(cookieParser());
@@ -57,10 +57,7 @@ app.get("/getuser", (req, res) => {
 });
 
 app.use("/api/users", userRouter);
-app.use("/stocks", stockRouter);
-app.post("/stocks", (req, res) => {
-  console.log(req.body);
-});
+app.use("/api/stocks", stockRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));

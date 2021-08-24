@@ -1,7 +1,16 @@
 const axios = require("axios");
+const User = require("../model/user");
 
-async function addStock(req, res) {
-  await console.log(req.body);
+function addStock(req, res) {
+  let ticker = req.body.ticker;
+  User.findById(req.user._id, async function (err, user) {
+    user.watch.push(req.body);
+    console.log(user);
+    let saved = await user.save();
+    res.send(saved);
+  });
+  // let savedUser = await user.save();
+  // console.log(`User: ${user.watch}`);
 }
 
 module.exports = { addStock };
