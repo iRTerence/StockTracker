@@ -7,12 +7,11 @@ export default function StockForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    props.addPort("hello");
-    // console.log(ticker);
+    props.addPort(ticker);
 
     try {
       axios.post("api/stocks/add", { ticker }).then((response) => {
-        console.log(response);
+        console.log(response.data);
       });
     } catch (error) {
       console.log(error);

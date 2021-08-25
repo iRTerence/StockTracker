@@ -2,9 +2,9 @@ const axios = require("axios");
 const User = require("../model/user");
 
 function addStock(req, res) {
-  let ticker = req.body.ticker;
+  let ticker = req.body;
   User.findById(req.user._id, async function (err, user) {
-    user.watch.push(req.body);
+    user.watch.push(ticker);
     console.log(user);
     let saved = await user.save();
     res.send(saved);
