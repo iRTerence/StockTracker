@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import StockTickerItem from "../StockTickerItem/StockTickerItem";
-import { myContext } from "../../contexts/UserContext";
 
 export default function WatchList(props) {
-  const context = useContext(myContext);
-
   function listItems() {
     if (props.watchList !== 0) {
       const watchList = props.watchList.map((tickers) => {

@@ -27,10 +27,17 @@ function App() {
 
   useEffect(() => {
     if (userObject) {
-      let emptyArr = [];
-      userObject.watch.map((ticker) => emptyArr.push(ticker.ticker));
-      console.log(emptyArr);
-      setWatchList((watchList) => [...watchList, ...emptyArr]);
+      let watchArr = [];
+      userObject.watch.map((ticker) => watchArr.push(ticker.ticker));
+      setWatchList((watchList) => [...watchList, ...watchArr]);
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (userObject) {
+      let portArr = [];
+      userObject.portfolio.map((ticker) => portArr.push(ticker.ticker));
+      setPortList((portList) => [...portList, ...portArr]);
     }
   }, [loggedIn]);
 
@@ -51,7 +58,11 @@ function App() {
           path='/'
           exact
           render={({ history }) => (
-            <HomePage history={history} watchList={watchList} />
+            <HomePage
+              history={history}
+              watchList={watchList}
+              portList={portList}
+            />
           )}
         />
         {userObject ? null : (
