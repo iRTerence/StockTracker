@@ -10,11 +10,29 @@ import axios from "axios";
 
 function App() {
   let [value, setValue] = useState(0);
+  let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState(["fight dog", "fight cat"]);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
+
+  useEffect(() => {
+    if (userObject) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
+
+  useEffect(() => {
+    if (userObject) {
+      let emptyArr = [];
+      userObject.watch.map((ticker) => emptyArr.push(ticker.ticker));
+      console.log(emptyArr);
+      setWatchList((watchList) => [...watchList, ...emptyArr]);
+    }
+  }, [loggedIn]);
 
   let addPortList = (newPort) => {
     setPortList((portList) => [...portList, newPort]);
@@ -33,7 +51,7 @@ function App() {
           path='/'
           exact
           render={({ history }) => (
-            <HomePage history={history} list={watchList} />
+            <HomePage history={history} watchList={watchList} />
           )}
         />
         {userObject ? null : (

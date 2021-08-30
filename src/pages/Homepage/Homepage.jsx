@@ -14,7 +14,7 @@ export default function Homepage(props) {
       ) : (
         <h1>Welcome to Stocktracker</h1>
       )}
-      <WatchList list={props.list} />
+      <WatchList watchList={props.watchList} />
       <PortList />
     </div>
   );
