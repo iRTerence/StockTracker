@@ -20,6 +20,10 @@ function App() {
     setPortList((portList) => [...portList, newPort]);
   };
 
+  let addWatchList = (newWatch) => {
+    setWatchList((watchList) => [...watchList, newWatch]);
+  };
+
   return (
     <div className='App'>
       <NavBar />
@@ -43,7 +47,11 @@ function App() {
           path='/search'
           exact
           render={({ history }) => (
-            <SearchPage history={history} addPort={addPortList} />
+            <SearchPage
+              history={history}
+              addPort={addPortList}
+              addWatch={addWatchList}
+            />
           )}
         />
       </Switch>

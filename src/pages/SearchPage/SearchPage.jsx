@@ -4,7 +4,7 @@ import StockForm from "../../components/StockForm/StockForm";
 export default function SearchPage(props) {
   return (
     <div>
-      <StockForm addPort={props.addPort} />
+      <StockForm addPort={props.addPort} addWatch={props.addWatch} />
     </div>
   );
 }
