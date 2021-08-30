@@ -57,6 +57,9 @@ function App() {
     axios
       .delete(`api/stocks/delwatch/${id}`)
       .then((res) => console.log(res.data));
+
+    let updateWatchList = watchList.filter((items) => items._id !== id);
+    setWatchList(updateWatchList);
   };
 
   return (

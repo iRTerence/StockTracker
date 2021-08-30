@@ -2,6 +2,7 @@ const axios = require("axios");
 const User = require("../model/user");
 
 async function deleteWatch(req, res) {
+  //used mongoose method to find and delete the item based on the req.params.id (the mongoose id for each stock)
   User.findOneAndUpdate(
     { "watch._id": req.params.id },
     {
