@@ -1,6 +1,21 @@
 const axios = require("axios");
 const User = require("../model/user");
 
+async function deleteWatch(req, res) {
+  User.findOneAndUpdate(
+    { "watch._id": req.params.id },
+    {
+      $pull: { watch: { _id: req.params.id } },
+    },
+    { new: true },
+    function (err, doc) {
+      console.log(err, doc);
+      res.send(doc);
+    }
+  );
+}
+
+//Adds to the logged in user watch list
 function addWatch(req, res) {
   let ticker = req.body;
   User.findById(req.user._id, async function (err, user) {
@@ -11,6 +26,7 @@ function addWatch(req, res) {
   });
 }
 
+//Adds to the logged in user portfolio list
 function addPort(req, res) {
   let ticker = req.body;
   User.findById(req.user._id, async function (err, user) {
@@ -21,4 +37,4 @@ function addPort(req, res) {
   });
 }
 
-module.exports = { addWatch, addPort };
+module.exports = { addWatch, addPort, deleteWatch };

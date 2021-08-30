@@ -5,26 +5,28 @@ import axios from "axios";
 export default function StockForm(props) {
   const [ticker, updateTicker, resetTicker] = useInputState("");
 
+  //Sends a post request with axios to save the ticker to the user's watchlist
   const addWatch = async (event) => {
     event.preventDefault();
-    props.addWatch(ticker);
 
     try {
       axios.post("api/stocks/addwatch", { ticker }).then((response) => {
-        console.log(response.data);
+        let lastItem = response.data.watch.length - 1;
+        props.addWatch(response.data.watch[lastItem]);
       });
     } catch (error) {
       console.log(error);
     }
   };
 
+  //Sends a post request with axios to save the ticker to the user's portfoliolist
   const addPort = async (event) => {
     event.preventDefault();
-    props.addPort(ticker);
 
     try {
       axios.post("api/stocks/addport", { ticker }).then((response) => {
-        console.log(response.data);
+        let lastItem = response.data.portfolio.length - 1;
+        props.addPort(response.data.portfolio[lastItem]);
       });
     } catch (error) {
       console.log(error);
