@@ -17,19 +17,24 @@ export default function NavBar() {
       });
   };
 
+  let search = userObject ? <Link to='/search'>Search</Link> : null;
+
+  let loggedIn = userObject ? (
+    <li onClick={logout}>Logout</li>
+  ) : (
+    <li>
+      <Link to='/login'>Login</Link>
+    </li>
+  );
+
   return (
     <div className={styles.navBarWrapper}>
       <ul className={styles.navBar}>
         <li>
           <Link to='/'>Home</Link>
         </li>
-        {userObject ? (
-          <li onClick={logout}>Logout</li>
-        ) : (
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-        )}
+        {search}
+        {loggedIn}
       </ul>
     </div>
   );

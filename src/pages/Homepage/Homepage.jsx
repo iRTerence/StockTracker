@@ -16,7 +16,6 @@ export default function Homepage(props) {
       )}
       <WatchList list={props.list} />
       <PortList />
-      <StockForm />
     </div>
   );
   return <div>{loginOrLogout}</div>;
