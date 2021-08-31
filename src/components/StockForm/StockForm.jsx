@@ -22,7 +22,6 @@ export default function StockForm(props) {
   //Sends a post request with axios to save the ticker to the user's portfoliolist
   const addPort = async (event) => {
     event.preventDefault();
-
     try {
       axios.post("api/stocks/addport", { ticker }).then((response) => {
         let lastItem = response.data.portfolio.length - 1;

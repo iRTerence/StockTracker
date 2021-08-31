@@ -53,6 +53,7 @@ function App() {
     setWatchList((watchList) => [...watchList, newWatch]);
   };
 
+  //function to delete watchlist items and to make a call to the backend
   let deleteWItem = async (id) => {
     axios
       .delete(`api/stocks/delwatch/${id}`)
