@@ -6,5 +6,6 @@ var stockCtrl = require("../../controllers/stocks");
 router.post("/addwatch", stockCtrl.addWatch);
 router.post("/addport", stockCtrl.addPort);
 router.delete("/delwatch/:id", stockCtrl.deleteWatch);
+router.delete("/delportfolio/:id", stockCtrl.deletePortfolio);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import React from "react";
-import StockTickerItem from "../StockTickerItem/StockTickerItem";
+import StockTickerItem from "../StockTickerItemW/StockTickerItemW";
 
 export default function WatchList(props) {
   function listItems() {
@@ -22,8 +22,8 @@ export default function WatchList(props) {
 
   return (
     <div>
+      <div>Watchlist</div>
       {listItems()}
-      <li>hi</li>
     </div>
   );
 }

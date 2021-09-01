@@ -16,6 +16,21 @@ async function deleteWatch(req, res) {
   );
 }
 
+async function deletePortfolio(req, res) {
+  //used mongoose method to find and delete the item based on the req.params.id (the mongoose id for each stock)
+  User.findOneAndUpdate(
+    { "portfolio._id": req.params.id },
+    {
+      $pull: { portfolio: { _id: req.params.id } },
+    },
+    { new: true },
+    function (err, doc) {
+      console.log(err, doc);
+      res.send(doc);
+    }
+  );
+}
+
 //Adds to the logged in user watch list
 function addWatch(req, res) {
   let ticker = req.body;
@@ -38,4 +53,4 @@ function addPort(req, res) {
   });
 }
 
-module.exports = { addWatch, addPort, deleteWatch };
+module.exports = { addWatch, addPort, deleteWatch, deletePortfolio };

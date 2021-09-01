@@ -54,13 +54,16 @@ function App() {
   };
 
   //function to delete watchlist items and to make a call to the backend
-  let deleteWItem = async (id) => {
+  let deleteWItem = (id) => {
     axios
       .delete(`api/stocks/delwatch/${id}`)
-      .then((res) => console.log(res.data));
-
-    let updateWatchList = watchList.filter((items) => items._id !== id);
-    setWatchList(updateWatchList);
+      .then((res) => setWatchList(res.data.watch));
+  };
+  //function to delete portfolio items and to make a call to the backend
+  let deletePItem = (id) => {
+    axios
+      .delete(`api/stocks/delportfolio/${id}`)
+      .then((res) => setPortList(res.data.watch));
   };
 
   return (
@@ -77,6 +80,7 @@ function App() {
               watchList={watchList}
               portList={portList}
               deleteWItem={deleteWItem}
+              deletePItem={deletePItem}
             />
           )}
         />

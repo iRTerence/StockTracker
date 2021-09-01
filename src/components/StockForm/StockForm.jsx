@@ -8,7 +8,6 @@ export default function StockForm(props) {
   //Sends a post request with axios to save the ticker to the user's watchlist
   const addWatch = async (event) => {
     event.preventDefault();
-
     try {
       axios.post("api/stocks/addwatch", { ticker }).then((response) => {
         let lastItem = response.data.watch.length - 1;
