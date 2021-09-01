@@ -14,12 +14,13 @@ const portSchema = new Schema({
     require: true,
     unique: true,
   },
-  value: {
+  average: {
     type: Number,
     default: 0,
   },
-  ammount: {
+  holdings: {
     type: Number,
+    default: 0,
   },
 });
 
