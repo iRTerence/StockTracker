@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { myContext } from "../../contexts/UserContext";
 import WatchList from "../../components/WatchList/WatchList";
 import PortList from "../../components/PortList/PortList";
-import StockForm from "../../components/StockForm/StockForm";
 
 export default function Homepage(props) {
   const context = useContext(myContext);

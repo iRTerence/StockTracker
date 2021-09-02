@@ -24,6 +24,7 @@ export default function StockForm(props) {
     try {
       axios.post("api/stocks/addport", { ticker }).then((response) => {
         let lastItem = response.data.portfolio.length - 1;
+        console.log(response.data.portfolio);
         props.addPort(response.data.portfolio[lastItem]);
       });
     } catch (error) {

@@ -1,6 +1,23 @@
 const axios = require("axios");
 const User = require("../model/user");
 
+async function editPortfolio(req, res) {
+  console.log(req.body);
+  console.log(req.params.id);
+  User.findOne({
+    "portfolio._id": req.params.id,
+  })
+    .then((stock) => {
+      let newStock = stock.portfolio.id(req.params.id);
+      newStock.average = req.body.average;
+      newStock.holdings = req.body.holdings;
+      return stock.save();
+    })
+    .then((data) => {
+      res.send(data);
+    });
+}
+
 async function deleteWatch(req, res) {
   //used mongoose method to find and delete the item based on the req.params.id (the mongoose id for each stock)
   User.findOneAndUpdate(
@@ -53,4 +70,10 @@ function addPort(req, res) {
   });
 }
 
-module.exports = { addWatch, addPort, deleteWatch, deletePortfolio };
+module.exports = {
+  addWatch,
+  addPort,
+  deleteWatch,
+  deletePortfolio,
+  editPortfolio,
+};

@@ -63,7 +63,17 @@ function App() {
   let deletePItem = (id) => {
     axios
       .delete(`api/stocks/delportfolio/${id}`)
-      .then((res) => setPortList(res.data.watch));
+      .then((res) => setPortList(res.data.portfolio));
+  };
+
+  //function to edit the portfolio
+  let editPortoflioStock = (id, newAverage, newHoldings) => {
+    let updatedStock = portList.map((stock) =>
+      stock.id === id
+        ? { ...stock, average: newAverage, holdings: newHoldings }
+        : stock
+    );
+    console.log(updatedStock);
   };
 
   return (
@@ -81,6 +91,7 @@ function App() {
               portList={portList}
               deleteWItem={deleteWItem}
               deletePItem={deletePItem}
+              edit={editPortoflioStock}
             />
           )}
         />

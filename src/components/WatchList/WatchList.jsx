@@ -1,7 +1,7 @@
 import React from "react";
 import StockTickerItem from "../StockTickerItemW/StockTickerItemW";
 
-export default function WatchList(props) {
+export default function watchList(props) {
   function listItems() {
     if (props.watchList !== 0) {
       const watchList = props.watchList.map((tickers) => {

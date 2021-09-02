@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useToggleState from "../../hooks/toggleState";
+import EditForm from "../EditForm/EditForm";
 
 export default function StockTickerItem(props) {
   const [isEditing, toggle] = useToggleState();
@@ -7,11 +8,12 @@ export default function StockTickerItem(props) {
   function handleRemove() {
     props.delete(props.id);
   }
+
   return (
     <div>
       <li>
         {isEditing ? (
-          <h1>EDITING TIME</h1>
+          <EditForm id={props.id} key={props.id} />
         ) : (
           <>
             {props.ticker}

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import StockTickerItem from "../StockTickerItemP/StockTickerItemP";
+import React from "react";
+import StockTickerItemP from "../StockTickerItemP/StockTickerItemP";
 
-export default function PortList(props) {
+export default function portList(props) {
   function listItems() {
     if (props.portList !== 0) {
       const portList = props.portList.map((tickers) => {
         return (
-          <StockTickerItem
+          <StockTickerItemP
             ticker={tickers.ticker}
             key={tickers._id}
             id={tickers._id}
