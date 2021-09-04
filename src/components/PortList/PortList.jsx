@@ -11,6 +11,9 @@ export default function portList(props) {
             key={tickers._id}
             id={tickers._id}
             delete={props.deletePitem}
+            edit={props.edit}
+            stocks={tickers.holdings}
+            average={tickers.average}
           />
         );
       });

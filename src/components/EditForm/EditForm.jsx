@@ -17,7 +17,8 @@ function EditForm(props) {
         holdings: holdingsValue,
       })
       .then((response) => {
-        console.log(response.data);
+        props.edit(props.id, averageValue, holdingsValue);
+        props.toggle();
       });
   }
 
@@ -28,15 +29,15 @@ function EditForm(props) {
         Shares
         <input
           type='number'
-          id='average'
-          placeholder='Average Cost'
+          id='holdings'
+          placeholder='Stocks held'
           onChange={handleChangeHoldings}
         />
         Average Cost
         <input
           type='number'
-          id='holdings'
-          placeholder='Stocks Held'
+          id='average'
+          placeholder='Average Cost'
           onChange={handleChangeAverage}
         />
         <button onClick={edit}>Submit</button>

@@ -13,7 +13,14 @@ export default function StockTickerItem(props) {
     <div>
       <li>
         {isEditing ? (
-          <EditForm id={props.id} key={props.id} />
+          <EditForm
+            id={props.id}
+            key={props.id}
+            edit={props.edit}
+            toggle={toggle}
+            stocks={props.holding}
+            average={props.average}
+          />
         ) : (
           <>
             {props.ticker}

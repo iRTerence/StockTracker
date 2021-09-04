@@ -10,6 +10,8 @@ import axios from "axios";
 
 function App() {
   let [value, setValue] = useState(0);
+  let [baseInvestment, setBaseInvestment] = useState(0);
+  let [currentInvestment, setCurrentInvestment] = useState(0);
   let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState([]);
@@ -24,22 +26,26 @@ function App() {
       setLoggedIn(false);
     }
   });
-  //sets the state of the watchlist from the Usercontext which gets the user item
+  //sets the state of the watch list, portfolio list, and base investment from the Usercontext which is the logged in user
   useEffect(() => {
     if (userObject) {
       let watchArr = [];
-      userObject.watch.map((ticker) => watchArr.push(ticker));
-      console.log(watchArr);
-      setWatchList((watchList) => [...watchList, ...watchArr]);
-    }
-  }, [loggedIn]);
-
-  //sets the state of the portfoliolist from the Usercontext which gets the user item
-  useEffect(() => {
-    if (userObject) {
       let portArr = [];
+      let portfolio = userObject.portfolio;
+
+      //set baseInvesetment (initial investment) from the user
+      for (let i = 0; i < portfolio.length; i++) {
+        baseInvestment =
+          portfolio[i].holdings * portfolio[i].average + baseInvestment;
+      }
+      setBaseInvestment(baseInvestment);
+
+      //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
       setPortList((portList) => [...portList, ...portArr]);
+      //sets watch list
+      userObject.watch.map((ticker) => watchArr.push(ticker));
+      setWatchList((watchList) => [...watchList, ...watchArr]);
     }
   }, [loggedIn]);
 
@@ -69,11 +75,11 @@ function App() {
   //function to edit the portfolio
   let editPortoflioStock = (id, newAverage, newHoldings) => {
     let updatedStock = portList.map((stock) =>
-      stock.id === id
+      stock._id === id
         ? { ...stock, average: newAverage, holdings: newHoldings }
         : stock
     );
-    console.log(updatedStock);
+    setPortList(updatedStock);
   };
 
   return (
