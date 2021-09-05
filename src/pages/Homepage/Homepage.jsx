@@ -13,11 +13,18 @@ export default function Homepage(props) {
       ) : (
         <h1>Welcome to Stocktracker</h1>
       )}
-      <WatchList watchList={props.watchList} deleteWItem={props.deleteWItem} />
+      <WatchList
+        watchList={props.watchList}
+        deleteWItem={props.deleteWItem}
+        apiWatchList={props.apiWatchList}
+      />
       <PortList
         portList={props.portList}
         deletePitem={props.deletePItem}
         edit={props.edit}
+        apiPortList={props.apiPortList}
+        addApiPort={props.addApiPort}
+        baseInvestment={props.baseInvestment}
       />
     </div>
   );

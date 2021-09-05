@@ -35,37 +35,27 @@ function App() {
     if (userObject) {
       let watchArr = [];
       let portArr = [];
-      let apiPort = [];
-      let apiWatch = [];
-      let portfolio = userObject.portfolio;
-
-      //set baseInvesetment (initial investment) from the user
-      for (let i = 0; i < portfolio.length; i++) {
-        baseInvestment =
-          portfolio[i].holdings * portfolio[i].average + baseInvestment;
-      }
-      setBaseInvestment(baseInvestment);
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
       setPortList((portList) => [...portList, ...portArr]);
-
-      //loop to set api objects to apiPort and then set apiPort to the state apiPortWatchlist
-      for (let i = 0; i < portArr.length; i++) {
-        fmp
-          .stock(portArr[i].ticker)
-          .quote()
-          .then((response) => apiPort.push(response[0]));
-      }
-
-      setApiPortList(apiPort);
-      console.log(process.env.REACT_APP_FMP_ID);
 
       //sets watch list
       userObject.watch.map((ticker) => watchArr.push(ticker));
       setWatchList((watchList) => [...watchList, ...watchArr]);
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (portList.length !== 0) {
+      let portfolio = userObject.portfolio;
+      let total = 0;
+      for (let i = 0; i < portfolio.length; i++) {
+        total = portfolio[i].holdings * portfolio[i].average + total;
+      }
+      setBaseInvestment(total);
+    }
+  });
 
   //Function to add to portfolio list state
   let addPortList = (newPort) => {
@@ -75,6 +65,10 @@ function App() {
   //Function to add to watch list state
   let addWatchList = (newWatch) => {
     setWatchList((watchList) => [...watchList, newWatch]);
+  };
+  //
+  let addApiPort = (newData) => {
+    setApiPortList((apiPortList) => [...apiPortList, ...newData]);
   };
 
   //function to delete watchlist items and to make a call to the backend
@@ -116,6 +110,8 @@ function App() {
               deleteWItem={deleteWItem}
               deletePItem={deletePItem}
               edit={editPortoflioStock}
+              addApiPort={addApiPort}
+              baseInvestment={baseInvestment}
             />
           )}
         />

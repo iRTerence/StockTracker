@@ -11,6 +11,7 @@ export default function watchList(props) {
             key={tickers._id}
             id={tickers._id}
             deleteWItem={props.deleteWItem}
+            apiWatchList={props.apiWatchList}
           />
         );
       });
