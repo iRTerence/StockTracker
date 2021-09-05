@@ -7,6 +7,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import SearchPage from "../SearchPage/SearchPage";
 import { myContext } from "../../contexts/UserContext";
 import axios from "axios";
+require("dotenv").config();
+const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 function App() {
   let [value, setValue] = useState(0);
@@ -15,6 +17,8 @@ function App() {
   let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState([]);
+  let [apiPortList, setApiPortList] = useState([]);
+  let [apiWatchList, setApiWatchList] = useState([]);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
@@ -31,6 +35,8 @@ function App() {
     if (userObject) {
       let watchArr = [];
       let portArr = [];
+      let apiPort = [];
+      let apiWatch = [];
       let portfolio = userObject.portfolio;
 
       //set baseInvesetment (initial investment) from the user
@@ -42,8 +48,19 @@ function App() {
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
-      console.log(portArr);
       setPortList((portList) => [...portList, ...portArr]);
+
+      //loop to set api objects to apiPort and then set apiPort to the state apiPortWatchlist
+      for (let i = 0; i < portArr.length; i++) {
+        fmp
+          .stock(portArr[i].ticker)
+          .quote()
+          .then((response) => apiPort.push(response[0]));
+      }
+
+      setApiPortList(apiPort);
+      console.log(process.env.REACT_APP_FMP_ID);
+
       //sets watch list
       userObject.watch.map((ticker) => watchArr.push(ticker));
       setWatchList((watchList) => [...watchList, ...watchArr]);
