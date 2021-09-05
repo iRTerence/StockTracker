@@ -1,9 +1,12 @@
 import React from "react";
 import StockTickerItemP from "../StockTickerItemP/StockTickerItemP";
+import axios from "axios";
 
 export default function portList(props) {
   function listItems() {
     if (props.portList !== 0) {
+      let apiInfo = [];
+
       const portList = props.portList.map((tickers) => {
         return (
           <StockTickerItemP
@@ -12,7 +15,7 @@ export default function portList(props) {
             id={tickers._id}
             delete={props.deletePitem}
             edit={props.edit}
-            stocks={tickers.holdings}
+            holdings={tickers.holdings}
             average={tickers.average}
           />
         );

@@ -18,7 +18,7 @@ export default function StockTickerItem(props) {
             key={props.id}
             edit={props.edit}
             toggle={toggle}
-            stocks={props.holding}
+            shares={props.holdings}
             average={props.average}
           />
         ) : (

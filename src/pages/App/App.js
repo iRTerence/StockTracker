@@ -42,6 +42,7 @@ function App() {
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
+      console.log(portArr);
       setPortList((portList) => [...portList, ...portArr]);
       //sets watch list
       userObject.watch.map((ticker) => watchArr.push(ticker));

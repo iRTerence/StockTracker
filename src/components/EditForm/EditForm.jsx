@@ -28,6 +28,7 @@ function EditForm(props) {
       <form>
         Shares
         <input
+          value={props.shares}
           type='number'
           id='holdings'
           placeholder='Stocks held'
@@ -35,6 +36,7 @@ function EditForm(props) {
         />
         Average Cost
         <input
+          value={props.average}
           type='number'
           id='average'
           placeholder='Average Cost'
