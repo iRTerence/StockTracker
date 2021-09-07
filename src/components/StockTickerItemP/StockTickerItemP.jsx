@@ -8,6 +8,7 @@ export default function StockTickerItem(props) {
   const [isLoading, setLoading] = useState(true);
   const [apiData, setApiData] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
+  const [rerender, setRerender] = useState(false);
 
   //Load the ticker api info. Set the loading page to off once promise resolves
   useEffect(() => {
@@ -17,19 +18,16 @@ export default function StockTickerItem(props) {
       .then((response) => {
         setApiData(response);
         setLoading(false);
-        props.addApiPort(response);
-        setValue();
-        // props.addValue(totalValue);
       });
   }, []);
 
   function handleRemove() {
-    props.delete(props.id);
+    props.delete(props.id, props.ticker);
   }
 
-  function setValue() {
-    let total = props.holdings * props.average;
-    setTotalValue(total);
+  function marketCost() {
+    setTotalValue(props.holdings * apiData[0].price);
+    setRerender(!rerender);
   }
 
   let value = props.holdings * props.average;
@@ -48,10 +46,12 @@ export default function StockTickerItem(props) {
               toggle={toggle}
               shares={props.holdings}
               average={props.average}
+              marketCost={marketCost}
             />
           ) : (
             <>
-              {props.ticker} - Value : {value}
+              {props.ticker} - Value : {value} | Market Value:
+              {props.holdings * apiData[0].price}
               <button onClick={handleRemove}>X</button>
               <button onClick={toggle}>Edit</button>
             </>

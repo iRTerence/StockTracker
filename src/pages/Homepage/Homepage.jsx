@@ -3,7 +3,7 @@ import { myContext } from "../../contexts/UserContext";
 import WatchList from "../../components/WatchList/WatchList";
 import PortList from "../../components/PortList/PortList";
 
-export default function Homepage(props) {
+function Homepage(props) {
   const context = useContext(myContext);
 
   let loginOrLogout = (
@@ -24,9 +24,11 @@ export default function Homepage(props) {
         edit={props.edit}
         apiPortList={props.apiPortList}
         addApiPort={props.addApiPort}
-        baseInvestment={props.baseInvestment}
+        deleteApi={props.deletApiItem}
       />
     </div>
   );
   return <div>{loginOrLogout}</div>;
 }
+
+export default Homepage;

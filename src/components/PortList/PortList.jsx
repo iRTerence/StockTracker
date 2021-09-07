@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import StockTickerItemP from "../StockTickerItemP/StockTickerItemP";
 import { myContext } from "../../contexts/UserContext";
 import axios from "axios";
+const token = process.env.REACT_APP_FMP_ID;
 
 export default function PortList(props) {
-  let [value, setValue] = useState([]);
+  let [api, setApi] = useState([]);
 
   //add initial investment for portfolio
   function addValues() {
@@ -29,7 +30,6 @@ export default function PortList(props) {
             holdings={tickers.holdings}
             average={tickers.average}
             addApiPort={props.addApiPort}
-            // addValue={addValue}
           />
         );
       });
@@ -41,7 +41,7 @@ export default function PortList(props) {
   return (
     <div>
       <div>Port List</div>
-      {addValues()}
+      Initial Investment: {addValues()}
       {listItems()}
     </div>
   );

@@ -6,19 +6,23 @@ import LoginPage from "../LoginPage/LoginPage";
 import NavBar from "../../components/NavBar/NavBar";
 import SearchPage from "../SearchPage/SearchPage";
 import { myContext } from "../../contexts/UserContext";
+import useToggleState from "../../hooks/toggleState";
 import axios from "axios";
+const token = process.env.REACT_APP_FMP_ID;
+const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
+const newsURL = `https://financialmodelingprep.com/api/v3/stock_news?limit=50&apikey=${token}`;
+const tickerURL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=`;
 require("dotenv").config();
 const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 function App() {
   let [value, setValue] = useState(0);
-  let [baseInvestment, setBaseInvestment] = useState(0);
-  let [currentInvestment, setCurrentInvestment] = useState(0);
   let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState([]);
   let [apiPortList, setApiPortList] = useState([]);
   let [apiWatchList, setApiWatchList] = useState([]);
+  let [render, toggle] = useToggleState();
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
@@ -35,6 +39,18 @@ function App() {
     if (userObject) {
       let watchArr = [];
       let portArr = [];
+      let apiPort = [];
+      let portfolio = userObject.portfolio;
+      //fetching API from API Stuff
+      async function getData(ticker) {
+        const response = await axios.get(`${rootURL + ticker}?apikey=${token}`);
+        setApiPortList((apiPortList) => [...apiPortList, ...response.data]);
+        return response;
+      }
+
+      for (let i = 0; i < portfolio.length; i++) {
+        getData(portfolio[i].ticker);
+      }
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
@@ -45,17 +61,6 @@ function App() {
       setWatchList((watchList) => [...watchList, ...watchArr]);
     }
   }, [loggedIn]);
-
-  useEffect(() => {
-    if (portList.length !== 0) {
-      let portfolio = userObject.portfolio;
-      let total = 0;
-      for (let i = 0; i < portfolio.length; i++) {
-        total = portfolio[i].holdings * portfolio[i].average + total;
-      }
-      setBaseInvestment(total);
-    }
-  });
 
   //Function to add to portfolio list state
   let addPortList = (newPort) => {
@@ -78,10 +83,12 @@ function App() {
       .then((res) => setWatchList(res.data.watch));
   };
   //function to delete portfolio items and to make a call to the backend
-  let deletePItem = (id) => {
+  let deletePItem = (id, tickerId) => {
     axios
       .delete(`api/stocks/delportfolio/${id}`)
       .then((res) => setPortList(res.data.portfolio));
+    const apiPort = apiPortList.filter((items) => items.symbol !== tickerId);
+    setApiPortList(apiPort);
   };
 
   //function to edit the portfolio
@@ -111,7 +118,6 @@ function App() {
               deletePItem={deletePItem}
               edit={editPortoflioStock}
               addApiPort={addApiPort}
-              baseInvestment={baseInvestment}
             />
           )}
         />

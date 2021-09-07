@@ -19,6 +19,7 @@ function EditForm(props) {
       .then((response) => {
         props.edit(props.id, averageValue, holdingsValue);
         props.toggle();
+        props.marketCost();
       });
   }
 
