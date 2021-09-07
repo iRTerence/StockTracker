@@ -63,8 +63,9 @@ function App() {
   }, [loggedIn]);
 
   //Function to add to portfolio list state
-  let addPortList = (newPort) => {
+  let addPortList = async (newPort, ticker) => {
     setPortList((portList) => [...portList, newPort]);
+    setApiPortList((apiPortList) => [...apiPortList, ...ticker]);
   };
 
   //Function to add to watch list state
@@ -72,7 +73,7 @@ function App() {
     setWatchList((watchList) => [...watchList, newWatch]);
   };
   //
-  let addApiPort = (newData) => {
+  let addApiPort = async (newData) => {
     setApiPortList((apiPortList) => [...apiPortList, ...newData]);
   };
 
