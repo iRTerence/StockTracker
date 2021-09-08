@@ -20,19 +20,6 @@ export default function StockForm(props) {
     }
   };
 
-  // const addPort = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     let firstData = await axios.post("api/stocks/addport", { ticker });
-  // let apiData = await axios.get(`${rootURL + ticker}?apikey=${token}`);
-  //     let lastItem = firstData.data.portfolio.length - 1;
-  //     await props.addPort(apiData.data.portfolio[lastItem], apiData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  //
   const addPort = async (event) => {
     event.preventDefault();
     try {
@@ -41,27 +28,11 @@ export default function StockForm(props) {
         axios.get(`${rootURL + ticker}?apikey=${token}`).then((res) => {
           props.addPort(response.data.portfolio[lastItem], [res.data[0]]);
         });
-
-        console.log(response.data.portfolio);
-        // props.addPort(response.data.portfolio[lastItem], []);
       });
     } catch (error) {
       console.log(error);
     }
   };
-  // Sends a post request with axios to save the ticker to the user's portfoliolist
-  // const addPort = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     axios.post("api/stocks/addport", { ticker }).then((response) => {
-  //       let lastItem = response.data.portfolio.length - 1;
-  //       console.log(response.data.portfolio);
-  //       props.addPort(response.data.portfolio[lastItem], []);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div>
@@ -75,8 +46,8 @@ export default function StockForm(props) {
           id='ticker'
           name='ticker'
         />
-        <button onClick={addWatch}>Add to Watchlist</button>
         <button onClick={addPort}>Add to Portfolio</button>
+        <button onClick={addWatch}>Add to Watchlist</button>
       </form>
     </div>
   );

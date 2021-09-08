@@ -24,7 +24,7 @@ function Homepage(props) {
         edit={props.edit}
         apiPortList={props.apiPortList}
         addApiPort={props.addApiPort}
-        deleteApi={props.deletApiItem}
+        isLoading={props.isLoading}
       />
     </div>
   );

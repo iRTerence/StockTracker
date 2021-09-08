@@ -21,19 +21,28 @@ function App() {
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState([]);
   let [apiPortList, setApiPortList] = useState([]);
+  let [apiPortMap, setApiPortMap] = useState({});
   let [apiWatchList, setApiWatchList] = useState([]);
-  let [render, toggle] = useToggleState();
+  let [isLoading, setIsLoading] = useState(false);
+  const [didMount, setDidMount] = useState(false);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
+
+  const toggle = () => {
+    setIsLoading(!isLoading);
+  };
+
   //This is to set if the user is logged in or logged out in the state. I use this so that useeffect can be updated per loggedin user
+
   useEffect(() => {
     if (userObject) {
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
     }
-  });
+  }, [userObject]);
+
   //sets the state of the watch list, portfolio list, and base investment from the Usercontext which is the logged in user
   useEffect(() => {
     if (userObject) {
@@ -41,16 +50,6 @@ function App() {
       let portArr = [];
       let apiPort = [];
       let portfolio = userObject.portfolio;
-      //fetching API from API Stuff
-      async function getData(ticker) {
-        const response = await axios.get(`${rootURL + ticker}?apikey=${token}`);
-        setApiPortList((apiPortList) => [...apiPortList, ...response.data]);
-        return response;
-      }
-
-      for (let i = 0; i < portfolio.length; i++) {
-        getData(portfolio[i].ticker);
-      }
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
@@ -59,8 +58,35 @@ function App() {
       //sets watch list
       userObject.watch.map((ticker) => watchArr.push(ticker));
       setWatchList((watchList) => [...watchList, ...watchArr]);
+
+      // loadData();
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (userObject) {
+      let portfolio = userObject.portfolio;
+      async function getData(ticker) {
+        const response = await axios
+          .get(`${rootURL + ticker}?apikey=${token}`)
+          .then((res) => {
+            console.log(res);
+            setApiPortList((apiPortList) => [...apiPortList, ...res.data]);
+          });
+
+        return response;
+      }
+
+      async function loadData() {
+        for (let i = 0; i < portfolio.length; i++) {
+          await getData(portfolio[i].ticker);
+        }
+
+        toggle();
+      }
+      loadData();
+    }
+  }, [userObject]);
 
   //Function to add to portfolio list state
   let addPortList = async (newPort, ticker) => {
@@ -115,10 +141,12 @@ function App() {
               history={history}
               watchList={watchList}
               portList={portList}
+              apiPortList={apiPortList}
               deleteWItem={deleteWItem}
               deletePItem={deletePItem}
               edit={editPortoflioStock}
               addApiPort={addApiPort}
+              isLoading={isLoading}
             />
           )}
         />

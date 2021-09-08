@@ -51,7 +51,7 @@ export default function StockTickerItem(props) {
           ) : (
             <>
               {props.ticker} - Value : {value} | Market Value:
-              {props.holdings * apiData[0].price}
+              {/* {props.holdings * apiData[0].price} */}
               <button onClick={handleRemove}>X</button>
               <button onClick={toggle}>Edit</button>
             </>
