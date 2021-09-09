@@ -9,7 +9,6 @@ const tickerURL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=`
 require("dotenv").config();
 
 export default function PortList(props) {
-  let [marketValue, setMarketValue] = useState(0);
   let [loaded, setLoaded] = useState(false);
   let [apiPortMap, setApiPortMap] = useState({});
 
@@ -22,7 +21,6 @@ export default function PortList(props) {
 
   useEffect(() => {
     if (userObject) {
-      let portfolio = userObject.portfolio;
       async function getData(ticker) {
         const response = await axios
           .get(`${rootURL + ticker}?apikey=${token}`)
@@ -50,31 +48,27 @@ export default function PortList(props) {
     }
   }, [props.portList]);
 
-  //end here for new stuff
-
   //add initial investment for portfolio
   function addBookCost() {
     if (props.portList !== 0) {
-      const newArray = props.portList.map(
+      const bookCost = props.portList.map(
         (element) => element.holdings * element.average
       );
-      return newArray.reduce((a, b) => a + b, 0);
+      return bookCost.reduce((a, b) => a + b, 0).toFixed(2);
     }
   }
 
   function addMarketValue() {
-    const newArray = props.portList.map((element, idx) => {
-      console.log({ portList: props.portList, element });
+    const marketValue = props.portList.map((element) => {
+      // console.log({ portList: props.portList, element });
       if (apiPortMap[element.ticker]) {
         return element.holdings * apiPortMap[element.ticker].price;
       }
       return 0;
     });
-    console.log(newArray, apiPortMap);
-    return newArray.reduce((a, b) => a + b, 0);
+    // console.log(marketValue, apiPortMap);
+    return marketValue.reduce((a, b) => a + b, 0).toFixed(2);
   }
-
-  // element.holdings * props.apiPortList[idx].price
 
   function listItems() {
     if (props.portList !== 0) {
@@ -90,7 +84,7 @@ export default function PortList(props) {
             average={tickers.average}
             addApiPort={props.addApiPort}
             isLoading={props.isLoading}
-            toggle={toggle}
+            apiInfo={apiPortMap[tickers.ticker]}
           />
         );
       });

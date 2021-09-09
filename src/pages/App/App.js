@@ -16,15 +16,11 @@ require("dotenv").config();
 const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 function App() {
-  let [value, setValue] = useState(0);
   let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
   let [watchList, setWatchList] = useState([]);
   let [apiPortList, setApiPortList] = useState([]);
-  let [apiPortMap, setApiPortMap] = useState({});
-  let [apiWatchList, setApiWatchList] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
-  const [didMount, setDidMount] = useState(false);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
@@ -48,8 +44,6 @@ function App() {
     if (userObject) {
       let watchArr = [];
       let portArr = [];
-      let apiPort = [];
-      let portfolio = userObject.portfolio;
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
