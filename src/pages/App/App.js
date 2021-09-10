@@ -20,7 +20,6 @@ function App() {
   let [portList, setPortList] = useState([]);
   let [portTickers, setPortTickers] = useState([]);
   let [watchList, setWatchList] = useState([]);
-  let [apiPortList, setApiPortList] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
@@ -62,35 +61,9 @@ function App() {
     }
   }, [loggedIn]);
 
-  // useEffect(() => {
-  //   if (userObject) {
-  //     let portfolio = userObject.portfolio;
-  //     async function getData(ticker) {
-  //       const response = await axios
-  //         .get(`${rootURL + ticker}?apikey=${token}`)
-  //         .then((res) => {
-  //           console.log(res);
-  //           setApiPortList((apiPortList) => [...apiPortList, ...res.data]);
-  //         });
-
-  //       return response;
-  //     }
-
-  //     async function loadData() {
-  //       for (let i = 0; i < portfolio.length; i++) {
-  //         await getData(portfolio[i].ticker);
-  //       }
-
-  //       toggle();
-  //     }
-  //     loadData();
-  //   }
-  // }, [userObject]);
-
   //Function to add to portfolio list state
   let addPortList = async (newPort, ticker) => {
     setPortList((portList) => [...portList, newPort]);
-    setApiPortList((apiPortList) => [...apiPortList, ...ticker]);
   };
 
   //Function to add to watch list state
@@ -98,9 +71,6 @@ function App() {
     setWatchList((watchList) => [...watchList, newWatch]);
   };
   //
-  let addApiPort = async (newData) => {
-    setApiPortList((apiPortList) => [...apiPortList, ...newData]);
-  };
 
   //function to delete watchlist items and to make a call to the backend
   let deleteWItem = (id) => {
@@ -113,8 +83,6 @@ function App() {
     axios
       .delete(`api/stocks/delportfolio/${id}`)
       .then((res) => setPortList(res.data.portfolio));
-    const apiPort = apiPortList.filter((items) => items.symbol !== tickerId);
-    setApiPortList(apiPort);
   };
 
   //function to edit the portfolio
@@ -140,11 +108,9 @@ function App() {
                 history={history}
                 watchList={watchList}
                 portList={portList}
-                apiPortList={apiPortList}
                 deleteWItem={deleteWItem}
                 deletePItem={deletePItem}
                 edit={editPortoflioStock}
-                addApiPort={addApiPort}
                 portTickers={portTickers}
                 isLoading={isLoading}
               />

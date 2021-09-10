@@ -41,7 +41,7 @@ export default function StockTickerItem(props) {
     100
   ).toFixed(2);
 
-  let totalGain = bookCost * (totalGainPercent / 100);
+  let totalGain = (bookCost * (totalGainPercent / 100)).toFixed(2);
 
   return (
     <tr>
@@ -94,7 +94,7 @@ export default function StockTickerItem(props) {
                   totalGainPercent >= 0 ? styles.positive : styles.negative
                 }>
                 <div>
-                  {totalGainPercent !== "Infinity" ? totalGainPercent : 0}%
+                  {totalGainPercent !== "Infinity" ? `${totalGainPercent}%` : 0}
                 </div>
                 <div>{isNaN(totalGain) ? 0 : totalGain}</div>
               </td>

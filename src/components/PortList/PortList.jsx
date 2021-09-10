@@ -105,7 +105,6 @@ export default function PortList(props) {
                 <th>Average Cost</th>
                 <th>Market Value</th>
                 <th>Book Cost</th>
-
                 <th>Daily Gain</th>
                 <th>Total Gain</th>
                 <th>Avg Volume (3m)</th>
