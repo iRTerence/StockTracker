@@ -16,10 +16,6 @@ export default function PortList(props) {
   //start here
   const userObject = useContext(myContext);
 
-  const toggle = () => {
-    setLoaded(!loaded);
-  };
-
   useEffect(() => {
     if (userObject) {
       async function getData(ticker) {
@@ -106,11 +102,12 @@ export default function PortList(props) {
                 <th>Ticker</th>
                 <th>Change</th>
                 <th>Shares</th>
-                <th>Average Cost / Share</th>
+                <th>Average Cost</th>
                 <th>Market Value</th>
+                <th>Book Cost</th>
+
                 <th>Daily Gain</th>
                 <th>Total Gain</th>
-                <th>Volume</th>
                 <th>Avg Volume (3m)</th>
                 <th>Edit</th>
               </tr>

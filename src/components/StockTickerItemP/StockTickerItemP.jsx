@@ -31,6 +31,17 @@ export default function StockTickerItem(props) {
   //setting all the prop information for readability
   let companyName = props.apiInfo.name;
   let stockPrice = props.apiInfo.price.toFixed(2);
+  let changePrecentage = props.apiInfo.changesPercentage.toFixed(2);
+  let dollarChange = props.apiInfo.change.toFixed(2);
+  let bookCost = props.holdings * props.average;
+  let marketValue = (props.holdings * props.apiInfo.price).toFixed(2);
+  let dailyGain = (props.holdings * props.apiInfo.change).toFixed(2);
+  let totalGainPercent = (
+    ((stockPrice - props.average) / props.average) *
+    100
+  ).toFixed(2);
+
+  let totalGain = bookCost * (totalGainPercent / 100);
 
   return (
     <tr>
@@ -60,35 +71,34 @@ export default function StockTickerItem(props) {
               <td>
                 <div
                   className={
-                    apiData[0].change > 0 ? styles.positive : styles.negative
+                    dollarChange > 0 ? styles.positive : styles.negative
                   }>
-                  {apiData[0].changesPercentage.toFixed(2)}%
+                  {changePrecentage}%
                 </div>
 
                 <div
                   className={
-                    apiData[0].change > 0 ? styles.positive : styles.negative
+                    dollarChange > 0 ? styles.positive : styles.negative
                   }>
-                  {apiData[0].change.toFixed(2)}
+                  {dollarChange}
                 </div>
               </td>
               <td>{props.holdings}</td>
-              <td>{props.average}</td>
-              <td>{(props.holdings * apiData[0].price).toFixed(2)}</td>
-              <td>{(props.holdings * apiData[0].change).toFixed(2)}</td>
-              <td>
-                {(props.holdings * apiData[0].price).toFixed(2) -
-                  (props.holdings * props.average).toFixed(2)}
+              <td>${props.average}</td>
+              <td>${marketValue}</td>
+              <td>${bookCost}</td>
+
+              <td>{dailyGain}</td>
+              <td
+                className={
+                  totalGainPercent >= 0 ? styles.positive : styles.negative
+                }>
                 <div>
-                  {(
-                    ((props.holdings * apiData[0].price).toFixed(2) -
-                      (props.holdings * props.average).toFixed(2)) /
-                    (props.holdings * props.average).toFixed(2)
-                  ).toFixed(2)}
+                  {totalGainPercent !== "Infinity" ? totalGainPercent : 0}%
                 </div>
+                <div>{isNaN(totalGain) ? 0 : totalGain}</div>
               </td>
-              <td>{apiData[0].volume}</td>
-              <td>{apiData[0].avgVolume}</td>
+              <td>{props.apiInfo.avgVolume}</td>
               <td>
                 <button onClick={handleRemove}>X</button>
                 <button onClick={toggle}>Edit</button>
