@@ -1,19 +1,19 @@
 import "./App.css";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
 import HomePage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";
 import NavBar from "../../components/NavBar/NavBar";
 import SearchPage from "../SearchPage/SearchPage";
 import { myContext } from "../../contexts/UserContext";
-import useToggleState from "../../hooks/toggleState";
+import Container from "react-bootstrap/Container";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 const newsURL = `https://financialmodelingprep.com/api/v3/stock_news?limit=50&apikey=${token}`;
 const tickerURL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=`;
 require("dotenv").config();
-const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 function App() {
   let [loggedIn, setLoggedIn] = useState(false);
@@ -125,44 +125,45 @@ function App() {
   return (
     <div className='App'>
       <NavBar />
-
-      <Switch>
-        <Route
-          path='/'
-          exact
-          render={({ history }) => (
-            <HomePage
-              history={history}
-              watchList={watchList}
-              portList={portList}
-              apiPortList={apiPortList}
-              deleteWItem={deleteWItem}
-              deletePItem={deletePItem}
-              edit={editPortoflioStock}
-              addApiPort={addApiPort}
-              isLoading={isLoading}
-            />
-          )}
-        />
-        {userObject ? null : (
+      <Container>
+        <Switch>
           <Route
-            path='/login'
+            path='/'
             exact
-            render={({ history }) => <LoginPage history={history} />}
+            render={({ history }) => (
+              <HomePage
+                history={history}
+                watchList={watchList}
+                portList={portList}
+                apiPortList={apiPortList}
+                deleteWItem={deleteWItem}
+                deletePItem={deletePItem}
+                edit={editPortoflioStock}
+                addApiPort={addApiPort}
+                isLoading={isLoading}
+              />
+            )}
           />
-        )}
-        <Route
-          path='/search'
-          exact
-          render={({ history }) => (
-            <SearchPage
-              history={history}
-              addPort={addPortList}
-              addWatch={addWatchList}
+          {userObject ? null : (
+            <Route
+              path='/login'
+              exact
+              render={({ history }) => <LoginPage history={history} />}
             />
           )}
-        />
-      </Switch>
+          <Route
+            path='/search'
+            exact
+            render={({ history }) => (
+              <SearchPage
+                history={history}
+                addPort={addPortList}
+                addWatch={addWatchList}
+              />
+            )}
+          />
+        </Switch>
+      </Container>
     </div>
   );
 }

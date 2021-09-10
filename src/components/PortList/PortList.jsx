@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import StockTickerItemP from "../StockTickerItemP/StockTickerItemP";
 import { myContext } from "../../contexts/UserContext";
 import axios from "axios";
+import Table from "react-bootstrap/Table";
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 const newsURL = `https://financialmodelingprep.com/api/v3/stock_news?limit=50&apikey=${token}`;
@@ -95,16 +96,35 @@ export default function PortList(props) {
   }
   return (
     <div>
+      <div> New stuff</div>
       <div>Port List</div>
       Initial Investment: {addBookCost()} Market Value:
       {props.isLoading ? (
-        <div>{addMarketValue()} </div>
+        <>
+          <div>{addMarketValue()}</div>
+          <Table striped bordered hover variant='dark'>
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Change</th>
+                <th>Shares</th>
+                <th>Average Cost / Share</th>
+                <th>Market Value</th>
+                <th>Daily Gain</th>
+                <th>Total Gain</th>
+                <th>Volume</th>
+                <th>Avg Volume (3m)</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>{listItems()}</tbody>
+          </Table>
+        </>
       ) : (
         <>
           <div>Loading</div>
         </>
       )}
-      {listItems()}
     </div>
   );
 }
