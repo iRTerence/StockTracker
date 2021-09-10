@@ -43,7 +43,7 @@ export default function PortList(props) {
           await getData(props.portList[i].ticker);
         }
 
-        toggle();
+        setLoaded(true);
       }
       loadData();
     }
@@ -61,13 +61,11 @@ export default function PortList(props) {
 
   function addMarketValue() {
     const marketValue = props.portList.map((element) => {
-      // console.log({ portList: props.portList, element });
       if (apiPortMap[element.ticker]) {
         return element.holdings * apiPortMap[element.ticker].price;
       }
       return 0;
     });
-    // console.log(marketValue, apiPortMap);
     return marketValue.reduce((a, b) => a + b, 0).toFixed(2);
   }
 
@@ -99,7 +97,7 @@ export default function PortList(props) {
       <div> New stuff</div>
       <div>Port List</div>
       Initial Investment: {addBookCost()} Market Value:
-      {props.isLoading ? (
+      {loaded ? (
         <>
           <div>{addMarketValue()}</div>
           <Table striped bordered hover variant='dark'>

@@ -25,6 +25,7 @@ function Homepage(props) {
         apiPortList={props.apiPortList}
         addApiPort={props.addApiPort}
         isLoading={props.isLoading}
+        portTickers={props.portTickers}
       />
     </div>
   );

@@ -18,6 +18,7 @@ require("dotenv").config();
 function App() {
   let [loggedIn, setLoggedIn] = useState(false);
   let [portList, setPortList] = useState([]);
+  let [portTickers, setPortTickers] = useState([]);
   let [watchList, setWatchList] = useState([]);
   let [apiPortList, setApiPortList] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
@@ -44,10 +45,14 @@ function App() {
     if (userObject) {
       let watchArr = [];
       let portArr = [];
+      let portTickers = [];
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
       setPortList((portList) => [...portList, ...portArr]);
+
+      userObject.portfolio.map((tickers) => portTickers.push(tickers.ticker));
+      setPortTickers(portTickers);
 
       //sets watch list
       userObject.watch.map((ticker) => watchArr.push(ticker));
@@ -57,30 +62,30 @@ function App() {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-    if (userObject) {
-      let portfolio = userObject.portfolio;
-      async function getData(ticker) {
-        const response = await axios
-          .get(`${rootURL + ticker}?apikey=${token}`)
-          .then((res) => {
-            console.log(res);
-            setApiPortList((apiPortList) => [...apiPortList, ...res.data]);
-          });
+  // useEffect(() => {
+  //   if (userObject) {
+  //     let portfolio = userObject.portfolio;
+  //     async function getData(ticker) {
+  //       const response = await axios
+  //         .get(`${rootURL + ticker}?apikey=${token}`)
+  //         .then((res) => {
+  //           console.log(res);
+  //           setApiPortList((apiPortList) => [...apiPortList, ...res.data]);
+  //         });
 
-        return response;
-      }
+  //       return response;
+  //     }
 
-      async function loadData() {
-        for (let i = 0; i < portfolio.length; i++) {
-          await getData(portfolio[i].ticker);
-        }
+  //     async function loadData() {
+  //       for (let i = 0; i < portfolio.length; i++) {
+  //         await getData(portfolio[i].ticker);
+  //       }
 
-        toggle();
-      }
-      loadData();
-    }
-  }, [userObject]);
+  //       toggle();
+  //     }
+  //     loadData();
+  //   }
+  // }, [userObject]);
 
   //Function to add to portfolio list state
   let addPortList = async (newPort, ticker) => {
@@ -140,6 +145,7 @@ function App() {
                 deletePItem={deletePItem}
                 edit={editPortoflioStock}
                 addApiPort={addApiPort}
+                portTickers={portTickers}
                 isLoading={isLoading}
               />
             )}

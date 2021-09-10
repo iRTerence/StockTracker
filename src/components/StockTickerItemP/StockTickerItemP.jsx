@@ -28,6 +28,9 @@ export default function StockTickerItem(props) {
   function marketCost() {
     setRerender(!rerender);
   }
+  //setting all the prop information for readability
+  let companyName = props.apiInfo.name;
+  let stockPrice = props.apiInfo.price.toFixed(2);
 
   return (
     <tr>
@@ -51,8 +54,8 @@ export default function StockTickerItem(props) {
             <>
               <td>
                 <div>{props.ticker}</div>
-                <div>{apiData[0].name}</div>
-                <div>{apiData[0].price.toFixed(2)}</div>
+                <div>{companyName}</div>
+                <div>{stockPrice}</div>
               </td>
               <td>
                 <div
