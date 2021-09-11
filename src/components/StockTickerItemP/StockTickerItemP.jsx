@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import useToggleState from "../../hooks/toggleState";
 import EditForm from "../EditForm/EditForm";
 import styles from "./StockTickerItemP.module.css";
-const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 export default function StockTickerItem(props) {
   const [isEditing, toggle] = useToggleState();
