@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { myContext } from "../../contexts/UserContext";
 import WatchList from "../../components/WatchList/WatchList";
 import PortList from "../../components/PortList/PortList";
+import Accordion from "react-bootstrap/Accordion";
 
 function Homepage(props) {
   const context = useContext(myContext);
@@ -13,10 +14,12 @@ function Homepage(props) {
       ) : (
         <h1>Welcome to Stocktracker</h1>
       )}
+
       <WatchList
         watchList={props.watchList}
         deleteWItem={props.deleteWItem}
         apiWatchList={props.apiWatchList}
+        watchTickers={props.watchTickers}
       />
       <PortList
         portList={props.portList}

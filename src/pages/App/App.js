@@ -20,14 +20,10 @@ function App() {
   let [portList, setPortList] = useState([]);
   let [portTickers, setPortTickers] = useState([]);
   let [watchList, setWatchList] = useState([]);
-  let [isLoading, setIsLoading] = useState(false);
+  let [watchTickers, setWatchTickers] = useState([]);
 
   //This is using context where I am checking if there is a User logged in for authorization and authentication
   const userObject = useContext(myContext);
-
-  const toggle = () => {
-    setIsLoading(!isLoading);
-  };
 
   //This is to set if the user is logged in or logged out in the state. I use this so that useeffect can be updated per loggedin user
 
@@ -45,11 +41,12 @@ function App() {
       let watchArr = [];
       let portArr = [];
       let portTickers = [];
+      let watchTicker = [];
 
       //sets portfolio list
       userObject.portfolio.map((ticker) => portArr.push(ticker));
       setPortList((portList) => [...portList, ...portArr]);
-
+      //sets tickers for the portfolio list
       userObject.portfolio.map((tickers) => portTickers.push(tickers.ticker));
       setPortTickers(portTickers);
 
@@ -57,7 +54,8 @@ function App() {
       userObject.watch.map((ticker) => watchArr.push(ticker));
       setWatchList((watchList) => [...watchList, ...watchArr]);
 
-      // loadData();
+      userObject.watch.map((tickers) => watchTicker.push(tickers.ticker));
+      setWatchTickers(watchTicker);
     }
   }, [loggedIn]);
 
@@ -112,7 +110,7 @@ function App() {
                 deletePItem={deletePItem}
                 edit={editPortoflioStock}
                 portTickers={portTickers}
-                isLoading={isLoading}
+                watchTickers={watchTickers}
               />
             )}
           />

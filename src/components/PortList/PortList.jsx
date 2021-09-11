@@ -3,10 +3,10 @@ import StockTickerItemP from "../StockTickerItemP/StockTickerItemP";
 import { myContext } from "../../contexts/UserContext";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import Accordion from "react-bootstrap/Accordion";
+
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
-const newsURL = `https://financialmodelingprep.com/api/v3/stock_news?limit=50&apikey=${token}`;
-const tickerURL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=`;
 require("dotenv").config();
 
 export default function PortList(props) {
@@ -62,7 +62,24 @@ export default function PortList(props) {
       }
       return 0;
     });
-    return marketValue.reduce((a, b) => a + b, 0).toFixed(2);
+    return parseInt(marketValue.reduce((a, b) => a + b, 0).toFixed(2));
+  }
+
+  function dailyGain() {
+    const dailyGain = props.portList.map((element) => {
+      if (apiPortMap[element.ticker]) {
+        return element.holdings * apiPortMap[element.ticker].change;
+      }
+      return 0;
+    });
+    return parseInt(dailyGain.reduce((a, b) => a + b, 0).toFixed(2));
+  }
+
+  function dailyChangePercentage() {
+    let marketValue = addMarketValue();
+    let total = marketValue + dailyGain();
+
+    return (((total - marketValue) / marketValue) * 100).toFixed(2);
   }
 
   function listItems() {
@@ -78,8 +95,8 @@ export default function PortList(props) {
             holdings={tickers.holdings}
             average={tickers.average}
             addApiPort={props.addApiPort}
-            isLoading={props.isLoading}
             apiInfo={apiPortMap[tickers.ticker]}
+            loaded={loaded}
           />
         );
       });
@@ -90,35 +107,48 @@ export default function PortList(props) {
   }
   return (
     <div>
-      <div> New stuff</div>
-      <div>Port List</div>
-      Initial Investment: {addBookCost()} Market Value:
-      {loaded ? (
-        <>
-          <div>{addMarketValue()}</div>
-          <Table striped bordered hover variant='dark'>
-            <thead>
-              <tr>
-                <th>Ticker</th>
-                <th>Change</th>
-                <th>Shares</th>
-                <th>Average Cost</th>
-                <th>Market Value</th>
-                <th>Book Cost</th>
-                <th>Daily Gain</th>
-                <th>Total Gain</th>
-                <th>Avg Volume (3m)</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>{listItems()}</tbody>
-          </Table>
-        </>
-      ) : (
-        <>
-          <div>Loading</div>
-        </>
-      )}
+      <Accordion flush>
+        <Accordion.Item eventKey='0'>
+          <Accordion.Header>
+            {loaded ? (
+              `${
+                userObject.name
+              }'s Portfolio ${addMarketValue()} ${dailyChangePercentage()} ${dailyGain()}`
+            ) : (
+              <></>
+            )}
+          </Accordion.Header>
+          <Accordion.Body>
+            {loaded ? (
+              <>
+                <div></div>
+                <Table striped bordered hover variant='dark'>
+                  <thead>
+                    <tr>
+                      <th>Ticker</th>
+                      <th>Change</th>
+                      <th>Shares</th>
+                      <th>Average Cost</th>
+                      <th>Market Value</th>
+                      <th>Book Cost</th>
+                      <th>Daily Gain</th>
+                      <th>Total Gain</th>
+                      <th>Avg Volume (3m)</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>{listItems()}</tbody>
+                </Table>
+                {dailyGain()}
+              </>
+            ) : (
+              <>
+                <div>Loading</div>
+              </>
+            )}
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </div>
   );
 }

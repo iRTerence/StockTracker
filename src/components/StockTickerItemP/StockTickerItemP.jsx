@@ -6,20 +6,7 @@ const fmp = require("financialmodelingprep")(process.env.REACT_APP_FMP_ID);
 
 export default function StockTickerItem(props) {
   const [isEditing, toggle] = useToggleState();
-  const [isLoading, setLoading] = useState(true);
-  const [apiData, setApiData] = useState([]);
   const [rerender, setRerender] = useState(false);
-
-  //Load the ticker api info. Set the loading page to off once promise resolves
-  useEffect(() => {
-    fmp
-      .stock(props.ticker)
-      .quote()
-      .then((response) => {
-        setApiData(response);
-        setLoading(false);
-      });
-  }, []);
 
   function handleRemove() {
     props.delete(props.id, props.ticker);
@@ -45,7 +32,7 @@ export default function StockTickerItem(props) {
 
   return (
     <tr>
-      {isLoading ? (
+      {!props.loaded ? (
         <td>Loading!</td>
       ) : (
         <>
