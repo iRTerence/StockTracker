@@ -3,6 +3,7 @@ import { myContext } from "../../contexts/UserContext";
 import WatchList from "../../components/WatchList/WatchList";
 import PortList from "../../components/PortList/PortList";
 import Accordion from "react-bootstrap/Accordion";
+import styles from "./Hompage.module.css";
 
 function Homepage(props) {
   const context = useContext(myContext);
@@ -10,17 +11,10 @@ function Homepage(props) {
   let loginOrLogout = (
     <div>
       {context ? (
-        <h1>Welcome Back {context.name}</h1>
+        <h1 className={styles.greyfont}>Welcome Back {context.name}</h1>
       ) : (
         <h1>Welcome to Stocktracker</h1>
       )}
-
-      <WatchList
-        watchList={props.watchList}
-        deleteWItem={props.deleteWItem}
-        apiWatchList={props.apiWatchList}
-        watchTickers={props.watchTickers}
-      />
       <PortList
         portList={props.portList}
         deletePitem={props.deletePItem}
@@ -29,6 +23,12 @@ function Homepage(props) {
         addApiPort={props.addApiPort}
         isLoading={props.isLoading}
         portTickers={props.portTickers}
+      />
+      <WatchList
+        watchList={props.watchList}
+        deleteWItem={props.deleteWItem}
+        apiWatchList={props.apiWatchList}
+        watchTickers={props.watchTickers}
       />
     </div>
   );

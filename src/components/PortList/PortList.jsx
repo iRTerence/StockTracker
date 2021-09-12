@@ -4,7 +4,7 @@ import { myContext } from "../../contexts/UserContext";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Accordion from "react-bootstrap/Accordion";
-
+import styles from "./PortList.module.css";
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 require("dotenv").config();
@@ -111,9 +111,15 @@ export default function PortList(props) {
         <Accordion.Item eventKey='0'>
           <Accordion.Header>
             {loaded ? (
-              `${
-                userObject.name
-              }'s Portfolio ${addMarketValue()} ${dailyChangePercentage()} ${dailyGain()}`
+              <div>
+                <span className={styles.greyfont}>
+                  {userObject.name}'s Portfolio
+                </span>
+                <span>${addMarketValue()}</span>
+                <span className={styles.totals}>
+                  ${dailyChangePercentage()} ${dailyGain()}
+                </span>
+              </div>
             ) : (
               <></>
             )}

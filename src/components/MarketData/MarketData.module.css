@@ -1,0 +1,22 @@
+.positive {
+  color: #00a656;
+  padding: 6px;
+}
+
+.negative {
+  color: #eb0f29;
+  padding: 6px;
+}
+
+.tickerdata {
+  margin: 9px;
+  font-family: sans-serif;
+  color: #afafaf;
+}
+
+.tickerinfo {
+}
+
+.marquee {
+  background-color: #424242;
+}

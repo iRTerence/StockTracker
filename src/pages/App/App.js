@@ -1,15 +1,18 @@
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
+import { myContext } from "../../contexts/UserContext";
+import MarketData from "../../components/MarketData/MarketData";
 import HomePage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";
 import NavBar from "../../components/NavBar/NavBar";
 import SearchPage from "../SearchPage/SearchPage";
-import { myContext } from "../../contexts/UserContext";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
+import Marquee from "react-fast-marquee";
 import "bootstrap/dist/css/bootstrap.min.css";
 const token = process.env.REACT_APP_FMP_ID;
+const majorIndexURL = `https://financialmodelingprep.com/api/v3/quotes/index?apikey=${token}`;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 const newsURL = `https://financialmodelingprep.com/api/v3/stock_news?limit=50&apikey=${token}`;
 const tickerURL = `https://financialmodelingprep.com/api/v3/stock_news?tickers=`;
@@ -96,6 +99,7 @@ function App() {
   return (
     <div className='App'>
       <NavBar />
+      <MarketData />
       <Container>
         <Switch>
           <Route

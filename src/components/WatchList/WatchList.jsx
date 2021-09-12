@@ -64,11 +64,9 @@ export default function WatchList(props) {
 
   return (
     <div>
-      <div>Watchlist</div>
-
-      <Accordion>
+      <Accordion flush>
         <Accordion.Item eventKey='0'>
-          <Accordion.Header>Accordion Item #1</Accordion.Header>
+          <Accordion.Header class='greyfont'>Watch List</Accordion.Header>
           <Accordion.Body>
             {loaded ? (
               <Table striped bordered hover variant='dark'>
