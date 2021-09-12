@@ -105,6 +105,7 @@ export default function PortList(props) {
       return <div> There are no items in your Portfolio!</div>;
     }
   }
+
   return (
     <div>
       <Accordion flush>
@@ -115,10 +116,15 @@ export default function PortList(props) {
                 <span className={styles.greyfont}>
                   {userObject.name}'s Portfolio
                 </span>
-                <span>${addMarketValue()}</span>
-                <span className={styles.totals}>
-                  ${dailyChangePercentage()} ${dailyGain()}
-                </span>
+                <div className={styles.current}>${addMarketValue()}</div>
+                <div
+                  className={
+                    dailyChangePercentage() >= 0
+                      ? styles.positive
+                      : styles.negative
+                  }>
+                  {dailyChangePercentage()}% ${dailyGain()}
+                </div>
               </div>
             ) : (
               <></>

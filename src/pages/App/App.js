@@ -9,7 +9,6 @@ import NavBar from "../../components/NavBar/NavBar";
 import SearchPage from "../SearchPage/SearchPage";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
-import Marquee from "react-fast-marquee";
 import "bootstrap/dist/css/bootstrap.min.css";
 const token = process.env.REACT_APP_FMP_ID;
 const majorIndexURL = `https://financialmodelingprep.com/api/v3/quotes/index?apikey=${token}`;

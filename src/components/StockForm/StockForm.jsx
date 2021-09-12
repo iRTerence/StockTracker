@@ -34,6 +34,8 @@ export default function StockForm(props) {
     }
   };
 
+  const getData = async (event) => {};
+
   return (
     <div>
       {ticker}
@@ -46,8 +48,9 @@ export default function StockForm(props) {
           id='ticker'
           name='ticker'
         />
-        <button onClick={addPort}>Add to Portfolio</button>
-        <button onClick={addWatch}>Add to Watchlist</button>
+        <button>Search!</button>
+        {/* <button onClick={addPort}>Add to Portfolio</button>
+        <button onClick={addWatch}>Add to Watchlist</button> */}
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import { myContext } from "../../contexts/UserContext";
 import Table from "react-bootstrap/Table";
 import Accordion from "react-bootstrap/Accordion";
 import axios from "axios";
+import styles from "./WatchList.module.css";
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 
@@ -66,7 +67,9 @@ export default function WatchList(props) {
     <div>
       <Accordion flush>
         <Accordion.Item eventKey='0'>
-          <Accordion.Header class='greyfont'>Watch List</Accordion.Header>
+          <Accordion.Header>
+            <span className={styles.greyfont}>Watch List</span>
+          </Accordion.Header>
           <Accordion.Body>
             {loaded ? (
               <Table striped bordered hover variant='dark'>

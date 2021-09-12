@@ -1,14 +1,26 @@
 .greyfont {
-  color: #afafaf;
+  color: #ffffff;
+  opacity: 87%;
+  font-size: x-large;
 }
 
-.totals {
-  padding-left: 50rem;
+.current {
+  margin-top: 10px;
+  color: #ffffff;
+  opacity: 87%;
+  font-weight: large;
 }
 
-.title {
-  width: 100%;
-}
-.earnings {
+.positive {
+  margin-top: 10px;
+  padding-left: 0;
+  font-weight: small;
   color: #00a656;
+}
+
+.negative {
+  margin-top: 10px;
+  padding-left: 0;
+  font-weight: small;
+  color: #eb0f29;
 }
