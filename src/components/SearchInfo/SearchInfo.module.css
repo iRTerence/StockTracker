@@ -1,0 +1,32 @@
+.font {
+  color: rgb(170 168 177);
+  font-family: "Lato", sans-serif;
+  text-align: center;
+}
+
+.center {
+  display: flex;
+}
+
+.price {
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  font-weight: bold;
+}
+
+.positive {
+  color: #00873c;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+}
+
+.negative {
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  color: #eb0f29;
+}
+
+.border {
+  border: solid white 1px;
+  margin-top: 5rem;
+}

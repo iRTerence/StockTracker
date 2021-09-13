@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useInputState from "../../hooks/handleChange";
 import axios from "axios";
+import SearchInfo from "../SearchInfo/SearchInfo";
 const token = process.env.REACT_APP_FMP_ID;
 const rootURL = `https://financialmodelingprep.com/api/v3/quote/`;
 
@@ -9,6 +10,7 @@ export default function StockForm(props) {
   const [quote, setQuote] = useState();
   const [rating, setRating] = useState();
   const [priceData, setPriceData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   //Sends a post request with axios to save the ticker to the user's watchlist
   const addWatch = async (event) => {
@@ -39,7 +41,6 @@ export default function StockForm(props) {
 
   const getData = async (event) => {
     event.preventDefault();
-
     var todayDate = new Date().toISOString().slice(0, 10);
     let daysAndMonths = todayDate.slice(4, 10);
     let lastYearDate = (new Date().getFullYear() - 1)
@@ -47,7 +48,6 @@ export default function StockForm(props) {
       .split("")
       .concat(daysAndMonths)
       .join("");
-
     let quote = `https://financialmodelingprep.com/api/v3/quote/${ticker.toUpperCase()}?apikey=${token}`;
     let rating = `https://financialmodelingprep.com/api/v3/rating/${ticker.toUpperCase()}?apikey=${token}`;
     let priceData = `https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from=${lastYearDate}&to=${todayDate}&apikey=${token}`;
@@ -69,6 +69,7 @@ export default function StockForm(props) {
         setQuote(responseArr[0].data[0]);
         setRating(responseArr[1].data[0]);
         setPriceData(responseArr[2].data);
+        setLoaded(true);
       });
     } catch (error) {
       console.error(error);
@@ -77,7 +78,6 @@ export default function StockForm(props) {
 
   return (
     <div>
-      {ticker}
       <form>
         <input
           type='text'
@@ -89,6 +89,17 @@ export default function StockForm(props) {
         />
         <button onClick={getData}>Search!</button>
       </form>
+      {loaded ? (
+        <SearchInfo
+          quote={quote}
+          rating={rating}
+          priceData={priceData}
+          addWatch={addWatch}
+          addPort={addPort}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
