@@ -30,3 +30,8 @@
   border: solid white 1px;
   margin-top: 5rem;
 }
+
+.date {
+  padding-left: 10px;
+  font-size: small;
+}

@@ -5,7 +5,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export default function SearchInfo(props) {
-  return (
+  var date = new Date().toLocaleString("en-US", {
+    timeZone: "America/New_York",
+  });
+
+  return props.quote === undefined ? (
+    <Container className={styles.border}>
+      <div className={styles.font}>Not a valid Ticker</div>
+    </Container>
+  ) : (
     <Container className={styles.border}>
       <div className={styles.font}>
         <Row>
@@ -19,7 +27,7 @@ export default function SearchInfo(props) {
               className={
                 props.quote.change >= 0 ? styles.positive : styles.negative
               }>
-              {props.quote.change}% ${props.quote.changesPercentage}
+              ${props.quote.change} {props.quote.changesPercentage}%
             </div>
           </Col>
           <Col lg='2'>
@@ -33,7 +41,7 @@ export default function SearchInfo(props) {
             </div>
           </Col>
         </Row>
-        <Row> {props.quote.name} </Row>
+        <Row className={styles.date}> As of {date} </Row>
       </div>
     </Container>
   );
