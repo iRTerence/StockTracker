@@ -3,6 +3,8 @@ import Container from "react-bootstrap/Container";
 import styles from "./SearchInfo.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ListGroup from "react-bootstrap/ListGroup";
+import StockChart from "../StockChart/StockChart";
 
 export default function SearchInfo(props) {
   var date = new Date().toLocaleString("en-US", {
@@ -42,6 +44,23 @@ export default function SearchInfo(props) {
           </Col>
         </Row>
         <Row className={styles.date}> As of {date} </Row>
+      </div>
+      <div>
+        <Row>
+          <Col lg='3'>
+            <ListGroup variant='flush'>
+              <ListGroup.Item>Cras justo odio</ListGroup.Item>
+              <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+              <ListGroup.Item>Morbi leo risus</ListGroup.Item>
+              <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+            </ListGroup>
+          </Col>
+          <Col lg='3'>Hello </Col>
+
+          <Col lg='6' className={styles.chart}>
+            <StockChart priceData={props.priceData} />
+          </Col>
+        </Row>
       </div>
     </Container>
   );

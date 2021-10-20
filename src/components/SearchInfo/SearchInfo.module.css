@@ -35,3 +35,12 @@
   padding-left: 10px;
   font-size: small;
 }
+
+.chart {
+  border: 1px, white, solid;
+}
+
+.list-group-item {
+  background: black;
+  /* color: white; */
+}

@@ -50,7 +50,7 @@ export default function StockForm(props) {
       .join("");
     let quote = `https://financialmodelingprep.com/api/v3/quote/${ticker.toUpperCase()}?apikey=${token}`;
     let rating = `https://financialmodelingprep.com/api/v3/rating/${ticker.toUpperCase()}?apikey=${token}`;
-    let priceData = `https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from=${lastYearDate}&to=${todayDate}&apikey=${token}`;
+    let priceData = `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker.toUpperCase()}?from=${lastYearDate}&to=${todayDate}&apikey=${token}`;
     let urls = [quote, rating, priceData];
     let newUrls = [];
 
@@ -102,9 +102,4 @@ export default function StockForm(props) {
       )}
     </div>
   );
-}
-
-{
-  /* <button onClick={addPort}>Add to Portfolio</button>
-        <button onClick={addWatch}>Add to Watchlist</button> */
 }
