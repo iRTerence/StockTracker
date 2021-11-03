@@ -4,9 +4,9 @@ const User = require("../../model/user");
 var userCtrl = require("../../controllers/users");
 const passport = require("passport");
 
-router.post("/add", function (req, res) {
-  console.log(req.body);
-});
+// router.post("/add", function (req, res) {
+//   console.log(req.body);
+// });
 
 router.get(
   "/auth/google",
